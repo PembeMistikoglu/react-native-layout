@@ -1,8 +1,36 @@
-import { TextInput, View, StyleSheet } from "react-native";
+import { TextInput, View, StyleSheet, Alert } from "react-native";
+import { useState } from "react";
 import React from "react";
 import PrimaryButton from "../components/PrimaryButton";
+import Colors from "../constants/colors";
 
-const StartGameScreen = () => {
+const { PRIMARY_800, ACCENT_500 } = Colors;
+
+const StartGameScreen = ({ onPickNumber }) => {
+  const [enteredNumber, setEnteredNumber] = useState("");
+
+  const numberInputHandler = (enteredText) => {
+    setEnteredNumber(enteredText);
+  };
+
+  const resetInputHandler = () => {
+    setEnteredNumber("");
+  };
+
+  const confirmInputHandler = () => {
+    const chosenNumber = parseInt(enteredNumber);
+
+    if (isNaN(chosenNumber) || chosenNumber <= 0 || chosenNumber > 99) {
+      Alert.alert(
+        "Invalid Number!",
+        "Number has to be a number between 1 and 99",
+        [{ text: "Okay", style: "destructive", onPress: resetInputHandler }]
+      );
+      return;
+    }
+    onPickNumber(chosenNumber);
+  };
+
   return (
     <View style={styles.inputContainer}>
       <TextInput
@@ -11,20 +39,23 @@ const StartGameScreen = () => {
         keyboardType="number-pad"
         autoCapitalize="none"
         autoCorrect={false}
+        onChangeText={numberInputHandler}
+        value={enteredNumber}
+        // value get from the TextInput will always be a string, so thats why we used empty string for useState intial value
       />
       <View style={styles.buttonsContainer}>
         <View style={styles.buttonContainer}>
-          <PrimaryButton>Reset</PrimaryButton>
+          <PrimaryButton onPress={resetInputHandler}>Reset</PrimaryButton>
         </View>
         <View style={styles.buttonContainer}>
-          <PrimaryButton>Confirm</PrimaryButton>
+          <PrimaryButton onPress={confirmInputHandler}>Confirm</PrimaryButton>
         </View>
       </View>
     </View>
   );
 };
 
-// every view has a new flexBox container!
+// every View  has a new flexBox container!
 export default StartGameScreen;
 
 const styles = StyleSheet.create({
@@ -32,7 +63,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 24,
     padding: 16,
     marginTop: 100,
-    backgroundColor: "#3b021f",
+    backgroundColor: PRIMARY_800,
     borderRadius: 8,
     justifyContent: "center",
     alignItems: "center",
@@ -58,9 +89,9 @@ const styles = StyleSheet.create({
   numberInput: {
     fontSize: 32,
     height: 50,
-    borderBottomColor: "#ddb52f",
+    borderBottomColor: ACCENT_500,
     borderBottomWidth: 2,
-    color: "#ddb52f",
+    color: ACCENT_500,
     marginVertical: 8,
     fontWeight: "bold",
     width: 50,

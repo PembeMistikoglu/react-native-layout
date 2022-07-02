@@ -1,10 +1,10 @@
 import { View, Text, Pressable, StyleSheet } from "react-native";
 import React from "react";
+import Colors from "../constants/colors";
 
-const PrimaryButton = ({ children }) => {
-  const pressHandler = () => {
-    console.log("I am pressed!");
-  };
+const { PRIMARY_500, PRIMARY_600 } = Colors;
+
+const PrimaryButton = ({ children, onPress }) => {
   return (
     <View style={styles.buttonOuterContainer}>
       <Pressable
@@ -15,8 +15,8 @@ const PrimaryButton = ({ children }) => {
         }
         // style prop can take callBack function which have 'pressed' argument which is boolean true if we press!
         // when we give multiple styles in array, all are applied!
-        onPress={pressHandler}
-        android_ripple={{ color: "#640233" }}
+        onPress={onPress}
+        android_ripple={{ color: PRIMARY_600 }}
       >
         <Text style={styles.buttonText}>{children}</Text>
       </Pressable>
@@ -40,12 +40,11 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   buttonInnerContainer: {
-    backgroundColor: "#971154",
+    backgroundColor: PRIMARY_500,
     paddingVertical: 8,
     paddingHorizontal: 16,
 
     // IOS shadow
-
     shadowColor: "black",
     shadowOffset: {
       width: 0,
@@ -54,7 +53,7 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     shadowOpacity: 0.25,
   },
-  //
+
   pressed: {
     opacity: 0.75,
   },
