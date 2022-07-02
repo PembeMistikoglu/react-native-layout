@@ -1,7 +1,7 @@
 import { TextInput, View, StyleSheet, Alert } from "react-native";
 import { useState } from "react";
 import React from "react";
-import PrimaryButton from "../components/PrimaryButton";
+import PrimaryButton from "../components/UI/PrimaryButton";
 import Colors from "../constants/colors";
 
 const { PRIMARY_800, ACCENT_500 } = Colors;
@@ -41,7 +41,6 @@ const StartGameScreen = ({ onPickNumber }) => {
         autoCorrect={false}
         onChangeText={numberInputHandler}
         value={enteredNumber}
-        // value get from the TextInput will always be a string, so thats why we used empty string for useState intial value
       />
       <View style={styles.buttonsContainer}>
         <View style={styles.buttonContainer}>
@@ -55,7 +54,6 @@ const StartGameScreen = ({ onPickNumber }) => {
   );
 };
 
-// every View  has a new flexBox container!
 export default StartGameScreen;
 
 const styles = StyleSheet.create({
