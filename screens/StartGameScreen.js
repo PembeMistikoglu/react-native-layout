@@ -2,9 +2,12 @@ import { TextInput, View, StyleSheet, Alert } from "react-native";
 import { useState } from "react";
 import React from "react";
 import PrimaryButton from "../components/UI/PrimaryButton";
+import Title from "../components/UI/Title";
+import Card from "../components/UI/Card";
 import Colors from "../constants/colors";
+import InstructionText from "../components/UI/InstructionText";
 
-const { PRIMARY_800, ACCENT_500 } = Colors;
+const { PRIMARY_800, ACCENT_500, PRIMARY_500 } = Colors;
 
 const StartGameScreen = ({ onPickNumber }) => {
   const [enteredNumber, setEnteredNumber] = useState("");
@@ -32,24 +35,28 @@ const StartGameScreen = ({ onPickNumber }) => {
   };
 
   return (
-    <View style={styles.inputContainer}>
-      <TextInput
-        style={styles.numberInput}
-        maxLength={2}
-        keyboardType="number-pad"
-        autoCapitalize="none"
-        autoCorrect={false}
-        onChangeText={numberInputHandler}
-        value={enteredNumber}
-      />
-      <View style={styles.buttonsContainer}>
-        <View style={styles.buttonContainer}>
-          <PrimaryButton onPress={resetInputHandler}>Reset</PrimaryButton>
+    <View style={styles.rootContainer}>
+      <Title>Guess My Number</Title>
+      <Card>
+        <InstructionText> Enter a number </InstructionText>
+        <TextInput
+          style={styles.numberInput}
+          maxLength={2}
+          keyboardType="number-pad"
+          autoCapitalize="none"
+          autoCorrect={false}
+          onChangeText={numberInputHandler}
+          value={enteredNumber}
+        />
+        <View style={styles.buttonsContainer}>
+          <View style={styles.buttonContainer}>
+            <PrimaryButton onPress={resetInputHandler}>Reset</PrimaryButton>
+          </View>
+          <View style={styles.buttonContainer}>
+            <PrimaryButton onPress={confirmInputHandler}>Confirm</PrimaryButton>
+          </View>
         </View>
-        <View style={styles.buttonContainer}>
-          <PrimaryButton onPress={confirmInputHandler}>Confirm</PrimaryButton>
-        </View>
-      </View>
+      </Card>
     </View>
   );
 };
@@ -60,14 +67,11 @@ const styles = StyleSheet.create({
   inputContainer: {
     marginHorizontal: 24,
     padding: 16,
-    marginTop: 100,
+    marginTop: 50,
     backgroundColor: PRIMARY_800,
     borderRadius: 8,
     justifyContent: "center",
     alignItems: "center",
-    // at alingItems: "center" buttons got smaller because
-    // default was stretch; buttons takes all available width!
-    // but on center doesn't stretch because we have input width on it!
 
     // Android Shadow
     elevation: 4,
@@ -83,6 +87,11 @@ const styles = StyleSheet.create({
   },
   buttonsContainer: {
     flexDirection: "row",
+  },
+  rootContainer: {
+    flex: 1,
+    marginTop: 80,
+    alignItems: "center",
   },
   numberInput: {
     fontSize: 32,
